@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import { Loader } from "lucide-react";
