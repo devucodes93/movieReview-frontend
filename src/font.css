@@ -1,0 +1,12 @@
+@import "tailwindcss";
+/* in globals.css or tailwind.css */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap");
+
+.font-bebas {
+  font-family: "Bebas Neue", cursive;
+}
+
+.font-cabin {
+  font-family: "Cabin", sans-serif;
+}
