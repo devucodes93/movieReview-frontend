@@ -101,6 +101,7 @@ const DetailsPage = () => {
     setUserRating(0);
     setHoverRating(0);
     setUserComment("");
+    getMovieReviews(movie._id);
   };
 
   return (
