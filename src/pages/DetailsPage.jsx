@@ -8,6 +8,7 @@ import {
   FaRegStar,
   FaStarHalfAlt,
 } from "react-icons/fa";
+import { Loader } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
 import { useMovieStore } from "../store/movieStore";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ const DetailsPage = () => {
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [userComment, setUserComment] = useState("");
+  const [fetchingRating, setFetchingRating] = useState(false);
 
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(
@@ -83,11 +85,12 @@ const DetailsPage = () => {
   };
 
   // add review
-  const handleAddReview = () => {
+  const handleAddReview = async () => {
     if (!userComment || userRating === 0) {
       toast.error("Please add rating/comment");
       return;
     }
+    setFetchingRating(true);
 
     const newReview = {
       user: "You", // In backend i replaced it with actual user id
@@ -101,7 +104,10 @@ const DetailsPage = () => {
     setUserRating(0);
     setHoverRating(0);
     setUserComment("");
-    getMovieReviews(movie._id);
+
+    const res = await getMovieReviews(movie._id);
+    setReviews(res);
+    res && setFetchingRating(false);
   };
 
   return (
@@ -155,9 +161,13 @@ const DetailsPage = () => {
 
             <div className="flex items-center mb-4">
               <FaStar className="text-yellow-400 mr-2" />
-              <span className="text-yellow-400 font-semibold">
-                {movie?.avgRating?.toFixed(1) || "N/A"}
-              </span>
+              {fetchingRating ? (
+                <Loader />
+              ) : (
+                <span className="text-yellow-400 font-semibold">
+                  {movie?.avgRating?.toFixed(1) || "N/A"}
+                </span>
+              )}
             </div>
 
             <p className="text-gray-200 line-clamp-3">{movie.description}</p>
