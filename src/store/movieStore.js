@@ -7,8 +7,6 @@ export const useMovieStore = create((set, get) => ({
   setMovies: (movies) => set({ movies }),
   selectedMovie: null,
   setSelectedMovie: (movie) => set({ selectedMovie: movie }),
-  rating: 0,
-  setRating: (rating) => set({ rating }),
 
   // Fetch movies from API
   getMovies: async () => {
@@ -41,13 +39,6 @@ export const useMovieStore = create((set, get) => ({
       const response = await axiosInstance.post(
         `/movies/get-reviews/` + movieId
       );
-      const avgRating =
-        response.data.length > 0
-          ? response.data.reduce((sum, r) => sum + r.rating, 0) /
-            response.data.length
-          : 0;
-
-      setRating(avgRating);
       return response.data.slice(0, 5);
     } catch (error) {
       console.error("Error fetching reviews:", error);

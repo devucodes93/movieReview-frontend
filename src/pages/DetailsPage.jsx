@@ -16,8 +16,7 @@ import toast from "react-hot-toast";
 import "../font.css";
 
 const DetailsPage = () => {
-  const { selectedMovie, reviewHandler, getMovieReviews, rating } =
-    useMovieStore();
+  const { selectedMovie, reviewHandler, getMovieReviews } = useMovieStore();
 
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -91,40 +90,31 @@ const DetailsPage = () => {
       toast.error("Please add rating/comment");
       return;
     }
-
     setFetchingRating(true);
 
     const newReview = {
-      user: "You",
+      user: "You", // In backend i replaced it with actual user id
       rating: userRating,
       comment: userComment,
     };
 
-    try {
-      await reviewHandler(movie._id, newReview);
-      setUserComment("");
-
-      await new Promise((r) => setTimeout(r, 1000));
-
-      const fetchReviews = async () => {
-        try {
-          const res = await getMovieReviews(selectedMovie._id);
-          setReviews(res);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      fetchReviews();
-
-      setUserRating(0);
-      setHoverRating(0);
-      setUserComment("");
-    } catch (err) {
-      toast.error("Failed to add review");
-      console.error(err);
-    } finally {
+    userComment && reviewHandler(movie._id, newReview);
+    setReviews([]);
+    if (!reviews) {
+      const res = await getMovieReviews(movie._id);
+      setReviews(res);
+      setReviews([newReview, ...reviews]);
       setFetchingRating(false);
+      setUserComment("");
+      return;
     }
+
+    setUserRating(0);
+    setHoverRating(0);
+    setUserComment("");
+
+    setReviews(res);
+    res && setFetchingRating(false);
   };
 
   return (
@@ -182,7 +172,7 @@ const DetailsPage = () => {
                 <Loader className="animate-spin h-5 w-5 text-yellow-400" />
               ) : (
                 <span className="text-yellow-400 font-semibold">
-                  {rating?.toFixed(1) || "N/A"}
+                  {movie?.avgRating?.toFixed(1) || "N/A"}
                 </span>
               )}
             </div>
