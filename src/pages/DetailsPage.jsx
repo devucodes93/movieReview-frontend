@@ -16,7 +16,8 @@ import toast from "react-hot-toast";
 import "../font.css";
 
 const DetailsPage = () => {
-  const { selectedMovie, reviewHandler, getMovieReviews } = useMovieStore();
+  const { selectedMovie, reviewHandler, getMovieReviews, rating } =
+    useMovieStore();
 
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -101,11 +102,19 @@ const DetailsPage = () => {
 
     try {
       await reviewHandler(movie._id, newReview);
+      setUserComment("");
 
       await new Promise((r) => setTimeout(r, 1000));
 
-      const updatedReviews = await getMovieReviews(movie._id);
-      setReviews(updatedReviews);
+      const fetchReviews = async () => {
+        try {
+          const res = await getMovieReviews(selectedMovie._id);
+          setReviews(res);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchReviews();
 
       setUserRating(0);
       setHoverRating(0);
@@ -173,7 +182,7 @@ const DetailsPage = () => {
                 <Loader className="animate-spin h-5 w-5 text-yellow-400" />
               ) : (
                 <span className="text-yellow-400 font-semibold">
-                  {movie?.avgRating?.toFixed(1) || "N/A"}
+                  {rating?.toFixed(1) || "N/A"}
                 </span>
               )}
             </div>
