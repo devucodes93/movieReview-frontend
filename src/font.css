@@ -1,0 +1,20 @@
+@import "tailwindcss";
+/* Existing fonts */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap");
+
+/* Add Russo One */
+@import url("https://fonts.googleapis.com/css2?family=Courgette&display=swap");
+
+.font-bebas {
+  font-family: "Bebas Neue", cursive;
+}
+
+.font-cabin {
+  font-family: "Cabin", sans-serif;
+}
+
+/* New class for Russo One */
+.font-courgette {
+  font-family: "Courgette", sans-serif;
+}
