@@ -100,17 +100,13 @@ const DetailsPage = () => {
     };
 
     try {
-      // Add review to backend
       await reviewHandler(movie._id, newReview);
 
-      // Wait 300ms to ensure backend updated (sometimes needed)
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 1000));
 
-      // Fetch latest reviews
       const updatedReviews = await getMovieReviews(movie._id);
       setReviews(updatedReviews);
 
-      // reset inputs
       setUserRating(0);
       setHoverRating(0);
       setUserComment("");
