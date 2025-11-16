@@ -1,7 +1,7 @@
 import axios from "axios";
 export const axiosInstance = axios.create({
   //https://moviereview-backend-1.onrender.com/api
-  baseURL: "http://localhost:3001/api/",
+  baseURL: "https://moviereview-backend-1.onrender.com/api/",
   withCredentials: true,
 
   headers: {
