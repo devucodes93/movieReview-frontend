@@ -90,30 +90,33 @@ const DetailsPage = () => {
       toast.error("Please add rating/comment");
       return;
     }
+
     setFetchingRating(true);
 
     const newReview = {
-      user: "You", // In backend i replaced it with actual user id
+      user: "You", // backend will replace with actual user ID
       rating: userRating,
       comment: userComment,
     };
 
-    userComment && reviewHandler(movie._id, newReview);
-    setReviews([]);
-    if (!reviews) {
-      const res = await getMovieReviews(movie._id);
-      setReviews(res);
-      setReviews([newReview, ...reviews]);
-      setFetchingRating(false);
+    try {
+      // Add review in backend
+      await reviewHandler(movie._id, newReview);
+
+      // Fetch updated reviews from backend
+      const updatedReviews = await getMovieReviews(movie._id);
+      setReviews(updatedReviews);
+
+      // reset inputs
       setUserRating(0);
       setHoverRating(0);
       setUserComment("");
-      return;
+    } catch (err) {
+      toast.error("Failed to add review");
+      console.error(err);
+    } finally {
+      setFetchingRating(false);
     }
-
-    setUserRating(0);
-    setHoverRating(0);
-    setUserComment("");
   };
 
   return (
