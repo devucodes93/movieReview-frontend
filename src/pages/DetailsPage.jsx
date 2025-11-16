@@ -94,16 +94,19 @@ const DetailsPage = () => {
     setFetchingRating(true);
 
     const newReview = {
-      user: "You", // backend will replace with actual user ID
+      user: "You",
       rating: userRating,
       comment: userComment,
     };
 
     try {
-      // Add review in backend
+      // Add review to backend
       await reviewHandler(movie._id, newReview);
 
-      // Fetch updated reviews from backend
+      // Wait 300ms to ensure backend updated (sometimes needed)
+      await new Promise((r) => setTimeout(r, 300));
+
+      // Fetch latest reviews
       const updatedReviews = await getMovieReviews(movie._id);
       setReviews(updatedReviews);
 
