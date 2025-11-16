@@ -99,15 +99,21 @@ const DetailsPage = () => {
     };
 
     userComment && reviewHandler(movie._id, newReview);
+    setReviews([]);
+    if (!reviews) {
+      const res = await getMovieReviews(movie._id);
+      setReviews(res);
+      setReviews([newReview, ...reviews]);
+      setFetchingRating(false);
+      setUserRating(0);
+      setHoverRating(0);
+      setUserComment("");
+      return;
+    }
 
-    setReviews([newReview, ...reviews]);
     setUserRating(0);
     setHoverRating(0);
     setUserComment("");
-
-    const res = await getMovieReviews(movie._id);
-    setReviews(res);
-    res && setFetchingRating(false);
   };
 
   return (
@@ -162,7 +168,7 @@ const DetailsPage = () => {
             <div className="flex items-center mb-4">
               <FaStar className="text-yellow-400 mr-2" />
               {fetchingRating ? (
-                <Loader />
+                <Loader className="animate-spin h-5 w-5 text-yellow-400" />
               ) : (
                 <span className="text-yellow-400 font-semibold">
                   {movie?.avgRating?.toFixed(1) || "N/A"}
