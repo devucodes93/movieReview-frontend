@@ -99,22 +99,16 @@ const DetailsPage = () => {
     };
 
     userComment && reviewHandler(movie._id, newReview);
-    setReviews([]);
-    if (!reviews) {
-      const res = await getMovieReviews(movie._id);
-      setReviews(res);
-      setReviews([newReview, ...reviews]);
-      setFetchingRating(false);
-      setUserComment("");
-      return;
-    }
+
+    const res = await getMovieReviews(movie._id);
+    setReviews(res);
+    setReviews([newReview, ...reviews]);
+    setFetchingRating(false);
+    setUserComment("");
 
     setUserRating(0);
     setHoverRating(0);
     setUserComment("");
-
-    setReviews(res);
-    res && setFetchingRating(false);
   };
 
   return (
