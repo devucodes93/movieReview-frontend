@@ -188,7 +188,7 @@ const Home = () => {
               />
 
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                <button className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold shadow-lg">
+                <button className="bg-yellow-500 text-black px-4 py-2 rounded-lg font-bold shadow-lg cursor-pointer">
                   See Details
                 </button>
               </div>
