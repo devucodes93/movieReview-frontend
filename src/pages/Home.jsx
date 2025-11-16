@@ -105,21 +105,21 @@ const Home = () => {
           {/* Mute button */}
           <button
             onClick={toggleMute}
-            className="absolute top-4 right-4 bg-black/40 p-2 rounded-full text-white hover:bg-black/60 transition"
+            className="absolute top-4 right-4 bg-black/40 p-2 rounded-full text-white hover:bg-black/60 transition cursor-pointer"
           >
             {isMuted ? <FaVolumeMute size={20} /> : <FaVolumeUp size={20} />}
           </button>
 
           <button
             onClick={prevVideo}
-            className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/30 p-2 rounded-full text-white hover:bg-black/50 transition"
+            className="absolute cursor-pointer top-1/2 left-2 transform -translate-y-1/2 bg-black/30 p-2 rounded-full text-white hover:bg-black/50 transition"
           >
             <FaChevronLeft />
           </button>
 
           <button
             onClick={nextVideo}
-            className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/30 p-2 rounded-full text-white hover:bg-black/50 transition"
+            className="absolute cursor-pointer top-1/2 right-2 transform -translate-y-1/2 bg-black/30 p-2 rounded-full text-white hover:bg-black/50 transition"
           >
             <FaChevronRight />
           </button>
